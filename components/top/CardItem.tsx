@@ -1,11 +1,12 @@
 import { ICoinData } from "@/models/ICoin";
 
-import { Image, ImageSourcePropType } from "react-native";
+import { ImageSourcePropType } from "react-native";
 import { formatPrice } from "@/utils/formatPrice";
 import { Card } from "../ui/card";
 import { Heading } from "../ui/heading";
 import { Text } from "../ui/text";
-
+import { Image } from "../ui/image";
+import { Box } from "../ui/box";
 interface ICardItemProps {
   readonly coin: ICoinData;
 }
@@ -17,30 +18,30 @@ export default function CardItem({ coin }: ICardItemProps) {
       : { uri: coin.image.large };
 
   return (
-    // <View className="border-2 border-gray-400 rounded-md p-2 h-24 mb-2 items-center flex flex-row justify-between">
-    //   <View className="flex flex-row items-center">
-    //     <Text className="mx-2 text-gray-500">{coin.market_cap_rank}</Text>
-    //     <Image
-    //       source={imageSource}
-    //       style={{ width: 50, height: 50, borderRadius: 25 }}
-    //     />
-    //     <View className="ml-2">
-    //       <Text className="text-lg">{coin.name}</Text>
-    //       <Text className="uppercase text-sm">{coin.symbol}</Text>
-    //     </View>
-    //   </View>
-    //   <View className="mr-2">
-    //     <Text className="text-xl font-regular">
-    //       {formatPrice(coin.current_price)}
-    //     </Text>
-    //   </View>
-    // </View>
-
-    <Card size="md" variant="filled" className="m-3">
-      <Heading size="md" className="mb-1">
-        Quick Start
-      </Heading>
-      <Text size="sm">Start building your next project in minutes</Text>
+    <Card
+      size="md"
+      variant="filled"
+      className="m-3 flex flex-row items-center "
+    >
+      <Image
+        size="md"
+        source={imageSource}
+        alt="image"
+        className="rounded-full"
+        width={50}
+        height={50}
+      />
+      <Box className="flex flex-col ml-3 text-dark dark:text-white">
+        <Heading size="md" className="mb-1 ">
+          {coin.name}
+        </Heading>
+        <Text size="sm" className="">
+          {coin.symbol}
+        </Text>
+      </Box>
+      <Text size="md" className="font-bold">
+        {formatPrice(coin.current_price)}
+      </Text>
     </Card>
   );
 }

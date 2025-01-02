@@ -31,8 +31,8 @@ export default function TabOneScreen() {
   }, []);
 
   return (
-    <Screen safeArea={true}>
-      <View className="flex flex-row items-center p-2">
+    <Screen safeArea={true} className="bg-white dark:bg-black">
+      <View className="flex flex-row items-center p-2 ">
         <FontAwesome name={"bitcoin"} size={24} color="white" />
 
         <Text className="text-2xl font-medium p-4 text-[--color-rgb]">

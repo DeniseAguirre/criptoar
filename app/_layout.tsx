@@ -1,24 +1,22 @@
 import FontAwesome from "@expo/vector-icons/FontAwesome";
 import { useFonts } from "expo-font";
-import { Stack } from "expo-router";
 import * as SplashScreen from "expo-splash-screen";
-import { useEffect } from "react";
+import React, { useEffect } from "react";
 import "react-native-reanimated";
 import "../styles/global.css";
 import { GluestackUIProvider } from "@/components/ui/gluestack-ui-provider";
-import { SafeAreaProvider } from "react-native-safe-area-context";
+import { SafeAreaView } from "react-native";
+import HomestayPage from "@/components/home/HomestayPage";
+import { ThemeContext, ThemeProvider } from "@/components/ui/theme-provider";
 
 export {
-  // Catch any errors thrown by the Layout component.
   ErrorBoundary,
 } from "expo-router";
 
 export const unstable_settings = {
-  // Ensure that reloading on `/modal` keeps a back button present.
   initialRouteName: "(tabs)",
 };
 
-// Prevent the splash screen from auto-hiding before asset loading is complete.
 SplashScreen.preventAutoHideAsync();
 
 export default function RootLayout() {
@@ -27,7 +25,6 @@ export default function RootLayout() {
     ...FontAwesome.font,
   });
 
-  // Expo Router uses Error Boundaries to catch errors in the navigation tree.
   useEffect(() => {
     if (error) throw error;
   }, [error]);
@@ -46,15 +43,31 @@ export default function RootLayout() {
 }
 
 function RootLayoutNav() {
-
   return (
-    <SafeAreaProvider>
-      <GluestackUIProvider>
-        <Stack>
-          <Stack.Screen name="(tabs)" options={{ headerShown: false }} />
-          <Stack.Screen name="modal" options={{ presentation: "modal" }} />
-        </Stack>
-      </GluestackUIProvider>
-    </SafeAreaProvider>
+    <ThemeProvider>
+      <RootContent />
+    </ThemeProvider>
   );
 }
+
+function RootContent() {
+  const { colorMode } = React.useContext(ThemeContext);
+  
+  return (
+    <>
+      <SafeAreaView
+        className={`${colorMode === "light" ? "bg-[#E5E5E5]" : "bg-[#262626]"}`}
+      />
+      <GluestackUIProvider mode={colorMode}>
+        <SafeAreaView
+          className={`${
+            colorMode === "light" ? "bg-white" : "bg-[#171717]"
+          } flex-1 overflow-hidden`}
+        >
+          <HomestayPage />
+        </SafeAreaView>
+      </GluestackUIProvider>
+    </>
+  );
+}
+
