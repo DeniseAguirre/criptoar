@@ -6,6 +6,7 @@ import { Plus, Home, User, Search } from "lucide-react-native";
 import { Box } from "../ui/box";
 import MobileModeChangeButton from "../common/MobileModeChangeButton";
 import MobileBottomTabs from "../common/MobileBottomTabs";
+import TopCrypto from "../top/TopCrypto";
 
 const bottomTabs = [
   {
@@ -43,10 +44,12 @@ const HomestayPage = () => {
         <StatusBar />
 
         <Box className="flex-1">
+          <TopCrypto isActive={activeTab === "Home"} />
+
           <MobileModeChangeButton />
         </Box>
         {/* mobile bottom tabs */}
-        <Box className="h-[72px] items-center w-full flex md:hidden border-t border-outline-50">
+        <Box className="h-[72px] items-center w-full flex md:hidden border-t border-outline-50 mt-2">
           <MobileBottomTabs
             activeTab={activeTab}
             setActiveTab={setActiveTab}

@@ -1,10 +1,10 @@
-import CardItem from "@/components/top/CardItem";
 import { ICoinData } from "@/models/ICoin";
 import React from "react";
 import { ScrollView } from "react-native";
-import { Screen } from "@/components/common/Screen";
-import { Text, View } from "@/components/Themed";
-import { FontAwesome } from "@expo/vector-icons";
+import { VStack } from "../ui/vstack";
+import { Screen } from "../common/Screen";
+import CryptoTable from "./CryptoTable";
+import CardTitle from "./CardTitle";
 
 async function fetchCoins(): Promise<ICoinData[]> {
   try {
@@ -19,7 +19,11 @@ async function fetchCoins(): Promise<ICoinData[]> {
   }
 }
 
-export default function TabOneScreen() {
+export default function TopCrypto({
+  isActive,
+}: {
+  readonly isActive: boolean;
+}) {
   const [coins, setCoins] = React.useState<ICoinData[]>([]);
 
   React.useEffect(() => {
@@ -31,20 +35,13 @@ export default function TabOneScreen() {
   }, []);
 
   return (
-    <Screen safeArea={true} className="bg-white dark:bg-black">
-      <View className="flex flex-row items-center p-2 ">
-        <FontAwesome name={"bitcoin"} size={24} color="white" />
-
-        <Text className="text-2xl font-medium p-4 text-[--color-rgb]">
-          Top 10 Criptomonedas
-        </Text>
-      </View>
-
-      <ScrollView>
-        {coins.map((coin) => (
-          <CardItem key={coin.id} coin={coin} />
-        ))}
-      </ScrollView>
-    </Screen>
+    <ScrollView style={{ display: isActive ? "flex" : "none" }}>
+      <VStack className="px-5 py-4 flex-1" space="lg">
+        <CardTitle />
+        <Screen safeArea={true}>
+          <CryptoTable coins={coins} />
+        </Screen>
+      </VStack>
+    </ScrollView>
   );
 }

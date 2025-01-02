@@ -1,73 +1,48 @@
-import FontAwesome from "@expo/vector-icons/FontAwesome";
-import { useFonts } from "expo-font";
-import * as SplashScreen from "expo-splash-screen";
-import React, { useEffect } from "react";
-import "react-native-reanimated";
-import "../styles/global.css";
-import { GluestackUIProvider } from "@/components/ui/gluestack-ui-provider";
+import "../global.css";
+import React from "react";
+import * as Linking from "expo-linking";
 import { SafeAreaView } from "react-native";
+import { GluestackUIProvider } from "@/components/ui/gluestack-ui-provider";
 import HomestayPage from "@/components/home/HomestayPage";
-import { ThemeContext, ThemeProvider } from "@/components/ui/theme-provider";
+import { ThemeContext } from "@/components/ui/theme-provider";
 
-export {
-  ErrorBoundary,
-} from "expo-router";
+let defaultTheme: "dark" | "light" = "light";
 
-export const unstable_settings = {
-  initialRouteName: "(tabs)",
-};
+Linking.getInitialURL().then((url: any) => {
+  let { queryParams } = Linking.parse(url) as any;
+  defaultTheme = queryParams?.iframeMode ?? defaultTheme;
+});
 
-SplashScreen.preventAutoHideAsync();
-
-export default function RootLayout() {
-  const [loaded, error] = useFonts({
-    SpaceMono: require("../assets/fonts/SpaceMono-Regular.ttf"),
-    ...FontAwesome.font,
-  });
-
-  useEffect(() => {
-    if (error) throw error;
-  }, [error]);
-
-  useEffect(() => {
-    if (loaded) {
-      SplashScreen.hideAsync();
-    }
-  }, [loaded]);
-
-  if (!loaded) {
-    return null;
-  }
-
-  return <RootLayoutNav />;
-}
-
-function RootLayoutNav() {
-  return (
-    <ThemeProvider>
-      <RootContent />
-    </ThemeProvider>
+export default function App() {
+  const [colorMode, setColorMode] = React.useState<"dark" | "light">(
+    defaultTheme
   );
-}
 
-function RootContent() {
-  const { colorMode } = React.useContext(ThemeContext);
-  
+  const toggleColorMode = React.useCallback(() => {
+    setColorMode((prev) => (prev === "light" ? "dark" : "light"));
+  }, []);
+
+  const contextValue = React.useMemo(
+    () => ({ colorMode, toggleColorMode }),
+    [colorMode, toggleColorMode]
+  );
+
   return (
     <>
       <SafeAreaView
         className={`${colorMode === "light" ? "bg-[#E5E5E5]" : "bg-[#262626]"}`}
       />
-      <GluestackUIProvider mode={colorMode}>
-        <SafeAreaView
-          className={`${
-            colorMode === "light" ? "bg-white" : "bg-[#171717]"
-          } flex-1 overflow-hidden`}
-        >
-          <HomestayPage />
-        </SafeAreaView>
-      </GluestackUIProvider>
+      <ThemeContext.Provider value={contextValue}>
+        <GluestackUIProvider mode={colorMode}>
+          <SafeAreaView
+            className={`${
+              colorMode === "light" ? "bg-white" : "bg-[#171717]"
+            } flex-1 overflow-hidden`}
+          >
+            <HomestayPage />
+          </SafeAreaView>
+        </GluestackUIProvider>
+      </ThemeContext.Provider>
     </>
   );
 }
-

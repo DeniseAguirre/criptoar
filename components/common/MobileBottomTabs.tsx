@@ -1,17 +1,24 @@
-import React from "react";
+import React, { useContext } from "react";
 
 import { HStack } from "../ui/hstack";
 import { Pressable } from "../ui/pressable";
 import { VStack } from "../ui/vstack";
 import { Icon } from "../ui/icon";
 import { Text } from "../ui/text";
+import { ThemeContext } from "../ui/theme-provider";
 
 const MobileBottomTabs = ({ bottomTabs, activeTab, setActiveTab }: any) => {
+  const { colorMode } = useContext(ThemeContext);
   const [modalVisible, setModalVisible] = React.useState(false);
   const [actionsheetVisible, setActionsheetVisible] = React.useState(false);
 
   return (
-    <HStack className="flex absolute bottom-0 justify-around w-full py-3 px-6 md:hidden">
+    <HStack
+      className="content-center absolute bottom-0 justify-between w-full py-3 px-6 md:hidden"
+      style={{
+        backgroundColor: colorMode === "light" ? "white" : "#171717",
+      }}
+    >
       {bottomTabs.map((tab: any) => {
         return (
           <Pressable
