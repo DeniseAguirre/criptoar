@@ -1,27 +1,16 @@
-// /** @type {import('tailwindcss').Config} */
-// module.exports = {
-//   content: ["./app/**/*.{js,ts,jsx,tsx}", "./components/**/*.{js,ts,jsx,tsx}"],
-//   presets: [require("nativewind/preset")],
-//   theme: {
-//     extend: {
-//       colors: {
-//         red: "#FF0000",
-//       },
-//     },
-//   },
-//   plugins: [],
-// };
-
-import gluestackPlugin from "@gluestack-ui/nativewind-utils/tailwind-plugin";
+const gluestackPlugin = require("@gluestack-ui/nativewind-utils/tailwind-plugin");
 
 /** @type {import('tailwindcss').Config} */
 module.exports = {
-  darkMode: process.env.DARK_MODE ? process.env.DARK_MODE : "media",
+  darkMode: "media",
   content: [
     "./app/**/*.{html,js,jsx,ts,tsx}",
     "./app/core-components/**/**/*.{html,js,jsx,ts,tsx}",
     "./app/components/**/*.{html,js,jsx,ts,tsx,mdx}",
     "./app/hooks/**/*.{html,js,jsx,ts,tsx,mdx}",
+    "./components/ui/**/*.{html,js,jsx,ts,tsx}",
+    "./components/common/**/*.{html,js,jsx,ts,tsx}",
+    "./App.{html,js,jsx,ts,tsx}",
   ],
   presets: [require("nativewind/preset")],
   theme: {
@@ -180,6 +169,13 @@ module.exports = {
           primary: "rgb(var(--color-indicator-primary)/<alpha-value>)",
           info: "rgb(var(--color-indicator-info)/<alpha-value>)",
           error: "rgb(var(--color-indicator-error)/<alpha-value>)",
+        },
+        content: {
+          0: "#FCFCFC",
+          50: "rgb(var(--color-content-50)/<alpha-value>)",
+        },
+        shade: {
+          0: "rgb(var(--color-shade-0)/<alpha-value>)",
         },
       },
       fontFamily: {

@@ -12,13 +12,13 @@ const getColorSchemeName = (
   mode: ModeType
 ): "light" | "dark" => {
   if (mode === "system") {
-    return colorScheme ?? "light";
+    return colorScheme ?? "dark";
   }
   return mode;
 };
 
 export function GluestackUIProvider({
-  mode = "light",
+  mode = "dark",
   ...props
 }: {
   mode?: "light" | "dark" | "system";

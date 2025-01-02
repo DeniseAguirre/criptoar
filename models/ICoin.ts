@@ -29,12 +29,14 @@ export interface ICoinData {
   sentiment_votes_down_percentage: number;
   watchlist_portfolio_users: number;
   market_cap_rank: number;
+  market_cap: number;
   market_data: MarketData;
   community_data: CommunityData;
   developer_data: DeveloperData;
   status_updates: any[];
   last_updated: string;
   tickers: Ticker[];
+  market_cap_change_percentage_24h: number;
 }
 
 export interface Platforms {

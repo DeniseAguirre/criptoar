@@ -1,60 +1,48 @@
-import FontAwesome from "@expo/vector-icons/FontAwesome";
-import { useFonts } from "expo-font";
-import { Stack } from "expo-router";
-import * as SplashScreen from "expo-splash-screen";
-import { useEffect } from "react";
-import "react-native-reanimated";
-import "../styles/global.css";
+import "../global.css";
+import React from "react";
+import * as Linking from "expo-linking";
+import { SafeAreaView } from "react-native";
 import { GluestackUIProvider } from "@/components/ui/gluestack-ui-provider";
-import { SafeAreaProvider } from "react-native-safe-area-context";
+import HomestayPage from "@/components/home/HomestayPage";
+import { ThemeContext } from "@/components/ui/theme-provider";
 
-export {
-  // Catch any errors thrown by the Layout component.
-  ErrorBoundary,
-} from "expo-router";
+let defaultTheme: "dark" | "light" = "light";
 
-export const unstable_settings = {
-  // Ensure that reloading on `/modal` keeps a back button present.
-  initialRouteName: "(tabs)",
-};
+Linking.getInitialURL().then((url: any) => {
+  let { queryParams } = Linking.parse(url) as any;
+  defaultTheme = queryParams?.iframeMode ?? defaultTheme;
+});
 
-// Prevent the splash screen from auto-hiding before asset loading is complete.
-SplashScreen.preventAutoHideAsync();
+export default function App() {
+  const [colorMode, setColorMode] = React.useState<"dark" | "light">(
+    defaultTheme
+  );
 
-export default function RootLayout() {
-  const [loaded, error] = useFonts({
-    SpaceMono: require("../assets/fonts/SpaceMono-Regular.ttf"),
-    ...FontAwesome.font,
-  });
+  const toggleColorMode = React.useCallback(() => {
+    setColorMode((prev) => (prev === "light" ? "dark" : "light"));
+  }, []);
 
-  // Expo Router uses Error Boundaries to catch errors in the navigation tree.
-  useEffect(() => {
-    if (error) throw error;
-  }, [error]);
-
-  useEffect(() => {
-    if (loaded) {
-      SplashScreen.hideAsync();
-    }
-  }, [loaded]);
-
-  if (!loaded) {
-    return null;
-  }
-
-  return <RootLayoutNav />;
-}
-
-function RootLayoutNav() {
+  const contextValue = React.useMemo(
+    () => ({ colorMode, toggleColorMode }),
+    [colorMode, toggleColorMode]
+  );
 
   return (
-    <SafeAreaProvider>
-      <GluestackUIProvider>
-        <Stack>
-          <Stack.Screen name="(tabs)" options={{ headerShown: false }} />
-          <Stack.Screen name="modal" options={{ presentation: "modal" }} />
-        </Stack>
-      </GluestackUIProvider>
-    </SafeAreaProvider>
+    <>
+      <SafeAreaView
+        className={`${colorMode === "light" ? "bg-[#E5E5E5]" : "bg-[#262626]"}`}
+      />
+      <ThemeContext.Provider value={contextValue}>
+        <GluestackUIProvider mode={colorMode}>
+          <SafeAreaView
+            className={`${
+              colorMode === "light" ? "bg-white" : "bg-[#171717]"
+            } flex-1 overflow-hidden`}
+          >
+            <HomestayPage />
+          </SafeAreaView>
+        </GluestackUIProvider>
+      </ThemeContext.Provider>
+    </>
   );
 }
