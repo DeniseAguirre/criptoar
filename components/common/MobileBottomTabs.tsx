@@ -41,7 +41,7 @@ const MobileBottomTabs = ({ bottomTabs, activeTab, setActiveTab }: any) => {
             <VStack className="items-center">
               <Icon
                 as={tab.icon}
-                size={"md"}
+                size={"lg"}
                 className={`${
                   activeTab === tab.label
                     ? "text-typography-900"

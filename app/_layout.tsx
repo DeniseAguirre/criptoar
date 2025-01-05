@@ -3,8 +3,9 @@ import React from "react";
 import * as Linking from "expo-linking";
 import { SafeAreaView } from "react-native";
 import { GluestackUIProvider } from "@/components/ui/gluestack-ui-provider";
-import HomestayPage from "@/components/home/HomestayPage";
 import { ThemeContext } from "@/components/ui/theme-provider";
+import "react-native-gesture-handler";
+import Navigation from "@/navigation/Navigation";
 
 let defaultTheme: "dark" | "light" = "light";
 
@@ -27,22 +28,20 @@ export default function App() {
     [colorMode, toggleColorMode]
   );
 
+  const backgroundColor = colorMode === "light" ? "#FFFFFF" : "#171717";
+
   return (
-    <>
-      <SafeAreaView
-        className={`${colorMode === "light" ? "bg-[#E5E5E5]" : "bg-[#262626]"}`}
-      />
-      <ThemeContext.Provider value={contextValue}>
-        <GluestackUIProvider mode={colorMode}>
-          <SafeAreaView
-            className={`${
-              colorMode === "light" ? "bg-white" : "bg-[#171717]"
-            } flex-1 overflow-hidden`}
-          >
-            <HomestayPage />
-          </SafeAreaView>
-        </GluestackUIProvider>
-      </ThemeContext.Provider>
-    </>
+    <ThemeContext.Provider value={contextValue}>
+      <GluestackUIProvider mode={colorMode}>
+        <SafeAreaView
+          style={{
+            flex: 1,
+            backgroundColor,
+          }}
+        >
+          <Navigation />
+        </SafeAreaView>
+      </GluestackUIProvider>
+    </ThemeContext.Provider>
   );
 }

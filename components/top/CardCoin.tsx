@@ -17,7 +17,7 @@ export default function CardCoin({ coin }: ICardItemProps) {
   return (
     <HStack className="justify-between items-center">
       <HStack space="lg">
-        <Avatar className="bg-primary-500">
+        <Avatar>
           <AvatarImage source={imageSource} />
         </Avatar>
         <VStack>

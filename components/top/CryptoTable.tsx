@@ -1,5 +1,5 @@
 import React from "react";
-import { Box, ScrollView } from "../ui";
+import { Box, Pressable, ScrollView } from "../ui";
 import {
   Table,
   TableBody,
@@ -13,12 +13,19 @@ import CardCoin from "./CardCoin";
 import { formatPrice } from "@/utils/formatPrice";
 import { formatPercentage } from "@/utils/formatPercentage";
 import { StyleSheet } from "react-native";
+import { CoinDetailNavigationProp } from "@/types/navigation";
+import { useNavigation } from "@react-navigation/native";
 
 interface ITableItemProps {
   readonly coins: ICoinData[];
 }
 
 function CryptoTable({ coins }: ITableItemProps) {
+  const navigation = useNavigation<CoinDetailNavigationProp>();
+  const handleRowPress = (id: string, name: string) => {
+    console.log("Row pressed:", id);
+    navigation.navigate("CoinDetail", { id, name });
+  };
   return (
     <Box style={styles.container}>
       <ScrollView horizontal={true} showsHorizontalScrollIndicator={false}>
@@ -41,43 +48,48 @@ function CryptoTable({ coins }: ITableItemProps) {
           </TableHeader>
           <TableBody>
             {coins.map((coin) => (
-              <TableRow key={coin.id}>
-                <TableData style={[styles.cell, styles.assetCell]}>
-                  <CardCoin coin={coin} />
-                </TableData>
-                <TableData
-                  className="font-bold"
-                  style={[styles.cell, styles.assetCell]}
-                >
-                  {formatPrice(coin.current_price)}
-                </TableData>
-                <TableData
-                  style={{
-                    ...styles.cell,
-                    ...styles.assetCell,
-                    color: coin.market_cap_change_percentage_24h
+              <Pressable
+                key={coin.id}
+                onPress={() => handleRowPress(coin.id, coin.name)}
+              >
+                <TableRow key={coin.id}>
+                  <TableData style={[styles.cell, styles.assetCell]}>
+                    <CardCoin coin={coin} />
+                  </TableData>
+                  <TableData
+                    className="font-bold"
+                    style={[styles.cell, styles.assetCell]}
+                  >
+                    {formatPrice(coin.current_price)}
+                  </TableData>
+                  <TableData
+                    style={{
+                      ...styles.cell,
+                      ...styles.assetCell,
+                      color: coin.market_cap_change_percentage_24h
+                        .toString()
+                        .includes("-")
+                        ? "red"
+                        : "#23ab42",
+                      fontWeight: "bold",
+                    }}
+                  >
+                    {coin.market_cap_change_percentage_24h
                       .toString()
                       .includes("-")
-                      ? "red"
-                      : "#23ab42",
-                    fontWeight: "bold",
-                  }}
-                >
-                  {coin.market_cap_change_percentage_24h
-                    .toString()
-                    .includes("-")
-                    ? "▼ "
-                    : "▲ "}
+                      ? "▼ "
+                      : "▲ "}
 
-                  {formatPercentage(coin.market_cap_change_percentage_24h)}
-                </TableData>
-                <TableData
-                  className="text-sm"
-                  style={[styles.cell, styles.assetCell]}
-                >
-                  {formatPrice(coin.market_cap)}
-                </TableData>
-              </TableRow>
+                    {formatPercentage(coin.market_cap_change_percentage_24h)}
+                  </TableData>
+                  <TableData
+                    className="text-sm"
+                    style={[styles.cell, styles.assetCell]}
+                  >
+                    {formatPrice(coin.market_cap)}
+                  </TableData>
+                </TableRow>
+              </Pressable>
             ))}
           </TableBody>
         </Table>
