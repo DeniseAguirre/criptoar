@@ -1,17 +1,19 @@
 import React, { useEffect } from "react";
 import { StatusBar, Platform } from "react-native";
 
-import { Plus, Home, User, Search } from "lucide-react-native";
+import { Plus, User, Search, ListOrdered } from "lucide-react-native";
 
 import { Box } from "../ui/box";
 import MobileModeChangeButton from "../common/MobileModeChangeButton";
 import MobileBottomTabs from "../common/MobileBottomTabs";
 import TopCrypto from "../top/TopCrypto";
 
+import ThemedView from "../common/ThemedView";
+
 const bottomTabs = [
   {
-    icon: Home,
-    label: "Home",
+    icon: ListOrdered,
+    label: "Top",
   },
   {
     icon: Search,
@@ -36,29 +38,28 @@ const HomestayPage = () => {
     }
   }, []);
 
-  const [activeTab, setActiveTab] = React.useState("Home");
+  const [activeTab, setActiveTab] = React.useState("Top");
 
   return (
-    <>
+    <ThemedView>
+      <StatusBar />
+
       <Box className="flex-1">
-        <StatusBar />
+        <TopCrypto isActive={activeTab === "Top"} />
 
-        <Box className="flex-1">
-          <TopCrypto isActive={activeTab === "Home"} />
-
-          <MobileModeChangeButton />
-        </Box>
-        {/* mobile bottom tabs */}
-        <Box className="h-[72px] items-center w-full flex md:hidden border-t border-outline-50 mt-2">
-          <MobileBottomTabs
-            activeTab={activeTab}
-            setActiveTab={setActiveTab}
-            bottomTabs={bottomTabs}
-          />
-        </Box>
+        <MobileModeChangeButton />
       </Box>
+      {/* mobile bottom tabs */}
+      <Box className="h-[50px] items-center w-full flex md:hidden border-t border-outline-50 mt-2">
+        <MobileBottomTabs
+          activeTab={activeTab}
+          setActiveTab={setActiveTab}
+          bottomTabs={bottomTabs}
+        />
+      </Box>
+
       {/* )} */}
-    </>
+    </ThemedView>
   );
 };
 export default HomestayPage;
