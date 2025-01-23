@@ -5,7 +5,8 @@ import { SafeAreaView } from "react-native";
 import { GluestackUIProvider } from "@/components/ui/gluestack-ui-provider";
 import { ThemeContext } from "@/components/ui/theme-provider";
 import "react-native-gesture-handler";
-import Navigation from "@/navigation/Navigation";
+import MobileModeChangeButton from "@/components/common/MobileModeChangeButton";
+import MyTabs from "@/navigation/TabBar";
 
 let defaultTheme: "dark" | "light" = "light";
 
@@ -39,7 +40,8 @@ export default function App() {
             backgroundColor,
           }}
         >
-          <Navigation />
+          <MobileModeChangeButton />
+          <MyTabs />
         </SafeAreaView>
       </GluestackUIProvider>
     </ThemeContext.Provider>

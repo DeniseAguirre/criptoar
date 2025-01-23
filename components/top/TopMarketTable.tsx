@@ -8,24 +8,31 @@ import {
   TableHeader,
   TableRow,
 } from "../ui/table";
-import { ICoinData } from "@/models/ICoin";
+import { ITopCurrencyData } from "@/models/IMarketData";
 import CardCoin from "./CardCoin";
-import { formatPrice } from "@/utils/formatPrice";
+
 import { formatPercentage } from "@/utils/formatPercentage";
 import { StyleSheet } from "react-native";
-import { CoinDetailNavigationProp } from "@/types/navigation";
+
 import { useNavigation } from "@react-navigation/native";
+import formatCurrencyShort from "@/utils/formatCurrencyShort";
+import { formatPrice } from "@/utils/priceFormatter";
+import { CurrencyDetailNavigationProp } from "@/types/navigation";
 
 interface ITableItemProps {
-  readonly coins: ICoinData[];
+  readonly coins: ITopCurrencyData[];
 }
 
-function CryptoTable({ coins }: ITableItemProps) {
-  const navigation = useNavigation<CoinDetailNavigationProp>();
-  const handleRowPress = (id: string, name: string) => {
-    console.log("Row pressed:", id);
-    navigation.navigate("CoinDetail", { id, name });
+function TopMarketTable({ coins }: ITableItemProps) {
+  const navigation = useNavigation<CurrencyDetailNavigationProp>();
+  const handleRowPress = (
+    id: string,
+
+    coin: ITopCurrencyData
+  ) => {
+    navigation.navigate("CurrencyDetail", { id, coin });
   };
+
   return (
     <Box style={styles.container}>
       <ScrollView horizontal={true} showsHorizontalScrollIndicator={false}>
@@ -47,14 +54,20 @@ function CryptoTable({ coins }: ITableItemProps) {
             </TableRow>
           </TableHeader>
           <TableBody>
-            {coins.map((coin) => (
+            {coins?.map((coin) => (
               <Pressable
                 key={coin.id}
-                onPress={() => handleRowPress(coin.id, coin.name)}
+                onPress={() =>
+                  handleRowPress(
+                    coin.id,
+
+                    coin
+                  )
+                }
               >
                 <TableRow key={coin.id}>
                   <TableData style={[styles.cell, styles.assetCell]}>
-                    <CardCoin coin={coin} />
+                    <CardCoin variant="simple" coin={coin} />
                   </TableData>
                   <TableData
                     className="font-bold"
@@ -83,10 +96,10 @@ function CryptoTable({ coins }: ITableItemProps) {
                     {formatPercentage(coin.market_cap_change_percentage_24h)}
                   </TableData>
                   <TableData
-                    className="text-sm"
+                    className="font-bold"
                     style={[styles.cell, styles.assetCell]}
                   >
-                    {formatPrice(coin.market_cap)}
+                    {formatCurrencyShort(coin.market_cap)}
                   </TableData>
                 </TableRow>
               </Pressable>
@@ -113,4 +126,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default CryptoTable;
+export default TopMarketTable;

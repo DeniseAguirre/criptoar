@@ -1,19 +1,19 @@
-import HomestayPage from "@/components/home/HomestayPage";
-import CoinDetailPage from "@/components/top/CoinDetailPage";
+import CurrencyDetail from "@/components/details/CurrencyDetailPage";
+import TopMarket from "@/components/top/TopMarketPage";
 
 export const routes = [
   {
     name: "Home",
-    component: HomestayPage,
+    component: TopMarket,
     options: {
       title: "Top Ten",
     },
   },
   {
-    name: "CoinDetail",
-    component: CoinDetailPage,
+    name: "CurrencyDetail",
+    component: CurrencyDetail,
     options: (route: any) => ({
-      title: route.params?.name || "Coin Detail",
+      title: route.params?.name || "Currency Detail",
     }),
   },
 ];

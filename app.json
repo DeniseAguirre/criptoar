@@ -21,7 +21,10 @@
       "adaptiveIcon": {
         "foregroundImage": "./assets/images/adaptive-icon.png",
         "backgroundColor": "#ffffff"
-      }
+      },
+      "fonts": [
+        "./assets/fonts/SpaceMono-Regular.ttf"
+      ]
     },
     "web": {
       "bundler": "metro",
@@ -37,7 +40,8 @@
         {
           "origin": "https://evanbacon.dev/"
         }
-      ]
+      ],
+      "expo-font"
     ]
   }
 }

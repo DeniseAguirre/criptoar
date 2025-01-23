@@ -1,13 +1,20 @@
+import { ITopCurrencyData } from "@/models/IMarketData";
 import { RouteProp } from "@react-navigation/native";
 import { StackNavigationProp } from "@react-navigation/stack";
 
 export type RootStackParamList = {
   Home: undefined;
-  CoinDetail: { id: string; name: string };
+  CurrencyDetail: {
+    id: string;
+    coin: ITopCurrencyData;
+  };
 };
 
-export type CoinDetailRouteProp = RouteProp<RootStackParamList, "CoinDetail">;
-export type CoinDetailNavigationProp = StackNavigationProp<
+export type CurrencyDetailRouteProp = RouteProp<
   RootStackParamList,
-  "CoinDetail"
+  "CurrencyDetail"
+>;
+export type CurrencyDetailNavigationProp = StackNavigationProp<
+  RootStackParamList,
+  "CurrencyDetail"
 >;
