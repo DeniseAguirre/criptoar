@@ -1,7 +1,7 @@
-# CryptoTop10 - Seguimiento de Criptomonedas
+# CriptoAr - Seguimiento de Criptomonedas
 
 ## Descripción
-CryptoTop10 es una aplicación móvil desarrollada en React Native que permite a los usuarios seguir y analizar las 10 principales criptomonedas del mercado en tiempo real. La aplicación proporciona información detallada, gráficos interactivos y características esenciales para los entusiastas de las criptomonedas.
+CriptoAr es una aplicación móvil desarrollada en React Native que permite a los usuarios seguir y analizar las 10 principales criptomonedas del mercado en tiempo real. La aplicación proporciona información detallada, gráficos interactivos y características esenciales para los entusiastas de las criptomonedas.
 
 ## Características Principales
 - Visualización en tiempo real de las 10 principales criptomonedas
@@ -29,7 +29,7 @@ CryptoTop10 es una aplicación móvil desarrollada en React Native que permite a
 
 ## Instalación
 1. Clonar el repositorio:
-   git clone [URL_del_repositorio]
+   git clone [https://github.com/DeniseAguirre/criptoar.git]
 
 2. Instalar dependencias:
    cd cryptotop10
@@ -93,12 +93,10 @@ Si deseas contribuir al proyecto:
 - [ ] Análisis técnico avanzado
 - [ ] Soporte multiidioma
 
-## Licencia
-Este proyecto está bajo la Licencia MIT - ver el archivo [LICENSE.md](LICENSE.md) para más detalles
 
 ## Contacto
-[Tu nombre] - [tu@email.com]
-GitHub: [tu-usuario]
+[Denise Aguirre Martinez] - [deniseaguirre.m@gmail.com]
+GitHub: [DeniseAguirre]
 
 ## Agradecimientos
 - CoinGecko por proporcionar la API
