@@ -1,28 +1,43 @@
-import React, { useLayoutEffect } from "react";
+import React, { useEffect, useLayoutEffect, useState } from "react";
 
 import { useRoute } from "@react-navigation/native";
 
 import { StyleSheet } from "react-native";
 import ThemedView from "../common/ThemedView";
 
-import CardCoin from "../top/CardCoin";
 import { Spinner } from "../ui/spinner";
-import { useCoinGeckoData } from "@/hooks/useCoinGeckoData";
 import { useNavigation } from "expo-router";
 import { Pressable } from "../ui";
 import { ArrowLeftIcon } from "lucide-react-native";
-import CurrencyChartVN from "./CurrencyChartVN";
-import { ITopCurrencyData } from "@/models/IMarketData";
+import CurrencyChart from "./CurrencyChart";
+import { ICurrencyData } from "@/models/ICurrencyData";
+import { coinGeckoService } from "@/services/api/coinGeckoService";
 
 function CurrencyDetail() {
   const navigation = useNavigation();
-
+  const [data, setData] = useState<ICurrencyData | null>(null);
+  const [loading, setLoading] = useState<boolean>(true);
   const route = useRoute();
-  const { id, coin } = route.params as {
+  const { id } = route.params as {
     id: string;
-    coin: ITopCurrencyData;
   };
-  const { currencyData, chartData, isLoading } = useCoinGeckoData(id);
+
+  const fetchDetails = async (id: string) => {
+    try {
+      const response = await coinGeckoService.getCurrencyData(id);
+      setData(response);
+    } catch (error) {
+      throw new Error("An error has ocurred: " + String(error));
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  useEffect(() => {
+    if (id) {
+      fetchDetails(String(id));
+    }
+  }, [id]);
 
   useLayoutEffect(() => {
     navigation.setOptions({
@@ -34,11 +49,11 @@ function CurrencyDetail() {
           <ArrowLeftIcon size={24} color="white" />
         </Pressable>
       ),
-      // title: currencyData?.name ?? "",
+      title: data?.name ?? "",
     });
-  }, [navigation, currencyData?.name]);
+  }, [navigation, data?.name]);
 
-  if (isLoading || !chartData) {
+  if (loading || !data) {
     return (
       <ThemedView style={styles.container}>
         <Spinner />
@@ -48,8 +63,7 @@ function CurrencyDetail() {
 
   return (
     <ThemedView style={styles.container}>
-      <CardCoin coin={coin} variant="detailed" />
-      <CurrencyChartVN currencyChartData={chartData} />
+      <CurrencyChart symbol={data?.symbol ?? ""} />
     </ThemedView>
   );
 }

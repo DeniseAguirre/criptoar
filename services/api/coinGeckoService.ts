@@ -6,13 +6,13 @@ import { ICurrencyData } from "@/models/ICurrencyData";
 export const coinGeckoService = {
   getCurrencyData: async (coinId: string) => {
     const { data } = await coinGeckoApi.get<ICurrencyData>(`/coins/${coinId}`, {
-      params: {
-        localization: false,
-        tickers: false,
-        community_data: false,
-        developer_data: false,
-        sparkline: false,
-      },
+      // params: {
+      //   localization: false,
+      //   tickers: false,
+      //   community_data: false,
+      //   developer_data: false,
+      //   sparkline: false,
+      // },
     });
     return data;
   },

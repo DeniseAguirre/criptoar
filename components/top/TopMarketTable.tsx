@@ -30,7 +30,7 @@ function TopMarketTable({ coins }: ITableItemProps) {
 
     coin: ITopCurrencyData
   ) => {
-    navigation.navigate("CurrencyDetail", { id, coin });
+    navigation.navigate("CurrencyDetail", { id });
   };
 
   return (
