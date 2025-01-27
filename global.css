@@ -18,3 +18,7 @@ body {
 ::-webkit-scrollbar-thumb {
   @apply bg-secondary-200 rounded-[20px] border-[3px] border-solid border-transparent;
 }
+
+.tradingview-widget-container {
+  @apply w-auto h-[610px];
+}

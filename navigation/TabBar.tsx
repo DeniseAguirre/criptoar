@@ -13,7 +13,12 @@ const Tab = createBottomTabNavigator();
 const bottomTabs = [
   { icon: ListOrdered, label: "Top", route: "Home", disabled: false },
   { icon: Search, label: "Search", route: "Search", disabled: false },
-  { icon: Plus, label: "Listing", route: "Listing", disabled: false },
+  {
+    icon: Plus,
+    label: "Listing",
+    route: "CryptocurrencyMarket",
+    disabled: false,
+  },
   { icon: User, label: "Profile", route: "Profile", disabled: true },
 ];
 
