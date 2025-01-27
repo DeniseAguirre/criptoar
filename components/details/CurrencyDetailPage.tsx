@@ -1,8 +1,8 @@
-import React, { useEffect, useLayoutEffect, useState } from "react";
+import React, { useContext, useEffect, useLayoutEffect, useState } from "react";
 
 import { useRoute } from "@react-navigation/native";
 
-import { StyleSheet } from "react-native";
+import { ScrollView, StyleSheet } from "react-native";
 import ThemedView from "../common/ThemedView";
 
 import { Spinner } from "../ui/spinner";
@@ -12,6 +12,8 @@ import { ArrowLeftIcon } from "lucide-react-native";
 import CurrencyChart from "./CurrencyChart";
 import { ICurrencyData } from "@/models/ICurrencyData";
 import { coinGeckoService } from "@/services/api/coinGeckoService";
+import CurrencyInfo from "./CurrencyInfo";
+import { ThemeContext } from "../ui/theme-provider";
 
 function CurrencyDetail() {
   const navigation = useNavigation();
@@ -21,6 +23,7 @@ function CurrencyDetail() {
   const { id } = route.params as {
     id: string;
   };
+  const { colorMode } = useContext(ThemeContext);
 
   const fetchDetails = async (id: string) => {
     try {
@@ -46,12 +49,15 @@ function CurrencyDetail() {
           onPress={() => navigation.goBack()}
           className="ml-4 flex-row items-center"
         >
-          <ArrowLeftIcon size={24} color="white" />
+          <ArrowLeftIcon
+            size={24}
+            color={colorMode === "light" ? "black" : "white"}
+          />
         </Pressable>
       ),
       title: data?.name ?? "",
     });
-  }, [navigation, data?.name]);
+  }, [navigation, data?.name, colorMode]);
 
   if (loading || !data) {
     return (
@@ -63,7 +69,10 @@ function CurrencyDetail() {
 
   return (
     <ThemedView style={styles.container}>
-      <CurrencyChart symbol={data?.symbol ?? ""} />
+      <ScrollView showsVerticalScrollIndicator={false}>
+        <CurrencyChart symbol={data?.symbol ?? ""} />
+        <CurrencyInfo currency={data} />
+      </ScrollView>
     </ThemedView>
   );
 }
@@ -71,7 +80,7 @@ function CurrencyDetail() {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    padding: 20,
+    paddingHorizontal: 20,
   },
 });
 

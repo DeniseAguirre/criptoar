@@ -21,7 +21,7 @@ export default function TopMarket() {
 
   return (
     <ThemedView>
-      <ScrollView>
+      <ScrollView showsVerticalScrollIndicator={false}>
         <VStack className="px-5 py-4 flex-1" space="lg">
           <CardTitle lastUpdated={lastUpdated} />
           <Screen safeArea={true}>
