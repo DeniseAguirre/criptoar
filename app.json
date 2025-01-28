@@ -15,16 +15,21 @@
       "backgroundColor": "#ffffff"
     },
     "ios": {
-      "supportsTablet": true
+      "supportsTablet": true,
+      "userInterfaceStyle": "automatic",
+      "bundleIdentifier": "com.anonymous.criptoar"
     },
     "android": {
       "adaptiveIcon": {
         "foregroundImage": "./assets/images/adaptive-icon.png",
         "backgroundColor": "#ffffff"
       },
+      "userInterfaceStyle": "automatic",
       "fonts": [
+        "./assets/fonts/SpaceMono-Regular.ttf",
         "./assets/fonts/SpaceMono-Regular.ttf"
-      ]
+      ],
+      "package": "com.anonymous.criptoar"
     },
     "web": {
       "bundler": "metro",

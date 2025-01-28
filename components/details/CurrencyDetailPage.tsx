@@ -9,11 +9,12 @@ import { Spinner } from "../ui/spinner";
 import { useNavigation } from "expo-router";
 import { Pressable } from "../ui";
 import { ArrowLeftIcon } from "lucide-react-native";
-import CurrencyChart from "./CurrencyChart";
+import CurrencyChartWidget from "./CurrencyChartWidget";
 import { ICurrencyData } from "@/models/ICurrencyData";
 import { coinGeckoService } from "@/services/api/coinGeckoService";
 import CurrencyInfo from "./CurrencyInfo";
 import { ThemeContext } from "../ui/theme-provider";
+import TechnicalAnalysisWidget from "./TechnicalAnalysisWidget";
 
 function CurrencyDetail() {
   const navigation = useNavigation();
@@ -42,11 +43,16 @@ function CurrencyDetail() {
     }
   }, [id]);
 
+  const goBack = () => {
+    setData(null);
+    navigation.goBack();
+  };
+
   useLayoutEffect(() => {
     navigation.setOptions({
       headerLeft: () => (
         <Pressable
-          onPress={() => navigation.goBack()}
+          onPress={() => goBack()}
           className="ml-4 flex-row items-center"
         >
           <ArrowLeftIcon
@@ -70,8 +76,9 @@ function CurrencyDetail() {
   return (
     <ThemedView style={styles.container}>
       <ScrollView showsVerticalScrollIndicator={false}>
-        <CurrencyChart symbol={data?.symbol ?? ""} />
+        <CurrencyChartWidget symbol={data?.symbol ?? ""} />
         <CurrencyInfo currency={data} />
+        <TechnicalAnalysisWidget symbol={data?.symbol ?? ""} />
       </ScrollView>
     </ThemedView>
   );

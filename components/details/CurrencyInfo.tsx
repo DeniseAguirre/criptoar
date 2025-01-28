@@ -1,6 +1,6 @@
 import React from "react";
 
-import { Badge, BadgeIcon, BadgeText, Box, Link, LinkText, Text } from "../ui";
+import { Badge, BadgeIcon, BadgeText, Box, Link, Text } from "../ui";
 import { ICurrencyData } from "@/models/ICurrencyData";
 import { Globe } from "lucide-react-native";
 import { formatPrice } from "@/utils/priceFormatter";
@@ -10,25 +10,7 @@ interface CurrencyInfoProps {
   readonly currency: ICurrencyData;
 }
 
-const renderDescription = (description: string) => {
-  const parts = description.split(/(<a.*?<\/a>)/);
-  return parts.map((part, index) => {
-    if (part.startsWith("<a")) {
-      const hrefMatch = /href="(.*?)"/.exec(part);
-      const href = hrefMatch?.[1];
-      const text = part.replace(/<[^>]+>/g, "");
-      return (
-        <Link key={part[0] + index} href={href} isExternal>
-          <LinkText className="text-blue-500 relative top-3">{text}</LinkText>
-        </Link>
-      );
-    }
-    return <Text key={part[0] + index}>{part}</Text>;
-  });
-};
-
 export default function CurrencyInfo({ currency }: CurrencyInfoProps) {
-  console.log(currency.description.en);
   return (
     <Box className="flex-1 ">
       <Box className="border border-gray-200 p-5 rounded-md mt-4 flex-1">
@@ -123,13 +105,6 @@ export default function CurrencyInfo({ currency }: CurrencyInfoProps) {
             </Link>
           </Box>
         )}
-      </Box>
-      <Box className="border border-gray-200 p-5 rounded-md mt-4 flex-1">
-        <Text className="font-bold mb-2">Sobre {currency.name}</Text>
-
-        <Text className="my-2">
-          {renderDescription(currency.description.en)}
-        </Text>
       </Box>
     </Box>
   );

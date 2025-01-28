@@ -37,7 +37,7 @@ function MyTabBar({ state, descriptors, navigation }: Readonly<TabBarProps>) {
         ({ icon: IconComponent, label, route, disabled }, index) => {
           const isFocused = state.index === index;
           const onPress = () => {
-            if (disabled) return; // Bloquea la navegación si el tab está deshabilitado
+            if (disabled) return;
             const event = navigation.emit({
               type: "tabPress",
               target: state.routes[index].key,
