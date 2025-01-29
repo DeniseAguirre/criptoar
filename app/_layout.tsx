@@ -8,6 +8,7 @@ import "react-native-gesture-handler";
 import MobileModeChangeButton from "@/components/common/MobileModeChangeButton";
 import MyTabs from "@/navigation/TabBar";
 import AsyncStorage from "@react-native-async-storage/async-storage";
+import { StatusBar } from "expo-status-bar";
 
 let defaultTheme: "dark" | "light" = "light";
 
@@ -22,24 +23,13 @@ export default function App() {
     null
   );
 
-  // Log para debug
-  console.log("Device color scheme:", deviceColorScheme);
-
   const [colorMode, setColorMode] = useState<"light" | "dark">(
     deviceColorScheme === "dark" ? "dark" : "light"
   );
 
-  // Log para debug
-  useEffect(() => {
-    console.log("Current color mode:", colorMode);
-    console.log("User preference:", userPreference);
-  }, [colorMode, userPreference]);
-
-  // Cargar preferencia guardada al inicio
   useEffect(() => {
     AsyncStorage.getItem("colorMode")
       .then((savedMode) => {
-        console.log("Saved mode from storage:", savedMode); // Log para debug
         if (savedMode === "light" || savedMode === "dark") {
           setUserPreference(savedMode);
           setColorMode(savedMode);
@@ -48,10 +38,8 @@ export default function App() {
       .catch((error) => console.error("Error loading color mode:", error));
   }, []);
 
-  // Seguir el modo del dispositivo si no hay preferencia guardada
   useEffect(() => {
     if (!userPreference && deviceColorScheme) {
-      console.log("Setting device color scheme:", deviceColorScheme); // Log para debug
       setColorMode(deviceColorScheme);
     }
   }, [deviceColorScheme, userPreference]);
@@ -81,6 +69,11 @@ export default function App() {
             backgroundColor: colorMode === "light" ? "#FFFFFF" : "#171717",
           }}
         >
+          <StatusBar
+            style={colorMode === "dark" ? "light" : "dark"}
+            backgroundColor={colorMode === "dark" ? "#000000" : "#ffffff"}
+            hidden={false}
+          />
           <MobileModeChangeButton />
           <MyTabs />
         </SafeAreaView>

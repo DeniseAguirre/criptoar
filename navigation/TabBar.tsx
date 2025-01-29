@@ -8,7 +8,7 @@ import { Text, PlatformPressable } from "@react-navigation/elements";
 import { ListOrdered, Plus, Search, User } from "lucide-react-native";
 import ThemedView from "@/components/common/ThemedView";
 
-const Tab = createBottomTabNavigator();
+export const Tab = createBottomTabNavigator();
 
 const bottomTabs = [
   { icon: ListOrdered, label: "Top", route: "Home", disabled: false },
@@ -104,9 +104,8 @@ export default function MyTabs() {
             ...(typeof options === "function" ? options(route) : options),
             headerStyle: {
               backgroundColor: headerBackgroundColor,
-              height: 56,
             },
-            headerStatusBarHeight: 0,
+            headerStatusBarHeight: Platform.OS === "android" ? 26 : 1,
             headerTitleStyle: {
               fontSize: 16,
               textAlign: "center",
