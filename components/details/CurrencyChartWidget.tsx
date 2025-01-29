@@ -7,7 +7,7 @@ interface WidgetProps {
   symbol: string;
 }
 
-const CurrencyChart: React.FC<WidgetProps> = ({ symbol }) => {
+const CurrencyChartWidget: React.FC<WidgetProps> = ({ symbol }) => {
   const { colorMode } = useContext(ThemeContext);
   const htmlContent = `
     <!DOCTYPE html>
@@ -25,6 +25,7 @@ const CurrencyChart: React.FC<WidgetProps> = ({ symbol }) => {
             width: 100%;
             height: 100%;
           }
+            
         </style>
       </head>
       <body>
@@ -68,7 +69,7 @@ const CurrencyChart: React.FC<WidgetProps> = ({ symbol }) => {
       }}
     >
       <WebView
-        key={symbol}
+        key={`technical-${symbol}`}
         source={{ html: htmlContent }}
         javaScriptEnabled={true}
         scalesPageToFit={false}
@@ -81,9 +82,10 @@ const CurrencyChart: React.FC<WidgetProps> = ({ symbol }) => {
         automaticallyAdjustContentInsets={false}
         cacheEnabled={false}
         incognito={true}
+        thirdPartyCookiesEnabled={false}
       />
     </View>
   );
 };
 
-export default CurrencyChart;
+export default CurrencyChartWidget;

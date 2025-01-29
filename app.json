@@ -2,34 +2,40 @@
   "expo": {
     "name": "criptoar",
     "slug": "criptoar",
-    "version": "1.0.0",
+    "version": "1.0.1",
     "sdkVersion": "52.0.0",
     "orientation": "portrait",
-    "icon": "./assets/images/icon.png",
+    "icon": "./assets/images/1024.png",
     "scheme": "myapp",
     "userInterfaceStyle": "automatic",
     "newArchEnabled": true,
     "splash": {
-      "image": "./assets/images/splash-icon.png",
+      "image": "./assets/images/criptoAr-splash.png",
       "resizeMode": "contain",
-      "backgroundColor": "#ffffff"
+      "backgroundColor": "#000000"
     },
     "ios": {
-      "supportsTablet": true
+      "supportsTablet": true,
+      "userInterfaceStyle": "automatic",
+      "bundleIdentifier": "com.anonymous.criptoar"
     },
     "android": {
+      "versionCode": 2,
       "adaptiveIcon": {
-        "foregroundImage": "./assets/images/adaptive-icon.png",
-        "backgroundColor": "#ffffff"
+        "foregroundImage": "./assets/images/criptoAr-splash.png",
+        "backgroundColor": "#000000"
       },
+      "userInterfaceStyle": "automatic",
       "fonts": [
+        "./assets/fonts/SpaceMono-Regular.ttf",
         "./assets/fonts/SpaceMono-Regular.ttf"
-      ]
+      ],
+      "package": "com.anonymous.criptoar"
     },
     "web": {
       "bundler": "metro",
       "output": "static",
-      "favicon": "./assets/images/favicon.png"
+      "favicon": "./assets/images/criptoAr-favicon.png"
     },
     "experiments": {
       "typedRoutes": true
@@ -42,6 +48,15 @@
         }
       ],
       "expo-font"
-    ]
+    ],
+    "extra": {
+      "router": {
+        "origin": "https://evanbacon.dev/"
+      },
+      "eas": {
+        "projectId": "97f53b8b-9850-450f-a228-c843a4ecb350"
+      }
+    },
+    "owner": "den.aguirre"
   }
 }
