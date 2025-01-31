@@ -5,7 +5,7 @@ import { routes } from "./routes";
 import { View, Platform, StyleSheet } from "react-native";
 import { useLinkBuilder } from "@react-navigation/native";
 import { Text, PlatformPressable } from "@react-navigation/elements";
-import { ListOrdered, Plus, Search, User } from "lucide-react-native";
+import { ListOrdered, Search, User } from "lucide-react-native";
 import ThemedView from "@/components/common/ThemedView";
 
 export const Tab = createBottomTabNavigator();
@@ -13,12 +13,6 @@ export const Tab = createBottomTabNavigator();
 const bottomTabs = [
   { icon: ListOrdered, label: "Top", route: "Home", disabled: false },
   { icon: Search, label: "Search", route: "Search", disabled: false },
-  {
-    icon: Plus,
-    label: "Listing",
-    route: "CryptocurrencyMarket",
-    disabled: false,
-  },
   { icon: User, label: "Profile", route: "Profile", disabled: true },
 ];
 
@@ -124,6 +118,7 @@ const styles = StyleSheet.create({
     flexDirection: "row",
     height: 60,
     backgroundColor: Platform.OS === "android" ? "#F5F5F5" : "#FFFFFF",
+    display: "none",
   },
   tabItem: {
     flex: 1,

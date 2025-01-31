@@ -40,16 +40,16 @@ function TopMarketTable({ coins }: ITableItemProps) {
           <TableHeader>
             <TableRow>
               <TableHead style={[styles.cell, styles.assetCell]}>
-                Assets
+                Moneda
               </TableHead>
               <TableHead style={[styles.cell, styles.assetCell]}>
-                Price
+                Precio
               </TableHead>
               <TableHead style={[styles.cell, styles.assetCell]}>
                 24 hs
               </TableHead>
               <TableHead style={[styles.cell, styles.assetCell]}>
-                Market Cap
+                Cap. Mercado
               </TableHead>
             </TableRow>
           </TableHeader>
