@@ -16,9 +16,9 @@ CriptoAr es una aplicación móvil desarrollada en React Native que permite a lo
 - React Native
 - Expo
 - API CoinGecko
-- React Native Charts
+- Typescript
 - Async Storage
-- Context API
+- Tailwind CSS
 - Axios
 
 ## Requisitos Previos
